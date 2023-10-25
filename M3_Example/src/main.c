@@ -8,7 +8,7 @@ void vid_vsync()
 }
 
 void draw_square(){
-    struct point3d eye_point = create_point3d(100, 20, 20);
+    struct point3d eye_point = create_point3d(-100, -20, -20);
     struct sqr s = create_sqr();
     struct sqr s_temp;
     float r, theta, phi;
@@ -30,7 +30,7 @@ void draw_square(){
     to_draw = flatten(s_temp);
     center(&to_draw);
     for(ii=0; ii < 12; ++ii){
-        m3_line(to_draw.lines[ii].from.x, to_draw.lines[ii].from.y, to_draw.lines[ii].to.x, to_draw.lines[ii].to.y, CLR_RED);
+        m3_line(to_draw.lines[ii].from.x, to_draw.lines[ii].from.y, to_draw.lines[ii].to.x, to_draw.lines[ii].to.y, CLR_LIME);
     }
 
 }
@@ -38,10 +38,45 @@ void draw_square(){
 int main(){
     int ii, jj;
     REG_DISPCNT = DCNT_MODE3 | DCNT_BG2;
-   // m3_fill(RGB15(12, 12 ,14));
-    m3_fill(CLR_BLUE);
-    draw_square();
-    while(1);
+
+    // Create objects.
+    struct point3d eye_point = create_point3d(-100, -20, -20);
+    struct sqr s = create_sqr();
+    struct sqr s_temp;
+    struct sqr_2d to_draw;
+    float r, theta, phi;
+    struct matrix m_rot, m_eye;
+
+    // initialize rotation matrices.
+    to_polar(eye_point, &r, &phi, &theta);
+    m_eye = create_eyepoint_matrix(phi, theta);
+    m_rot = create_rotz_matrix(0.1);
+
+    float angle = 0;
+    float angle_u = 0.1;
+
+    m3_fill(CLR_BLACK);
+
+    while(1){
+        //m_rot = create_rotz_matrix(angle);
+        //angle += angle_u;
+        transform(&s, m_rot);
+
+
+        m3_fill(CLR_BLACK);
+        s_temp = s;
+        //eye point transformation
+        transform(&s_temp, m_eye);
+        translate(&s_temp, create_point3d(0, 0, -r));
+        //project to 2d image
+        to_draw = flatten(s_temp);
+        center(&to_draw);
+        for(ii=0; ii < 12; ++ii){
+            m3_line(to_draw.lines[ii].from.x, to_draw.lines[ii].from.y, to_draw.lines[ii].to.x, to_draw.lines[ii].to.y, CLR_LIME);
+        }
+
+        //vid_vsync();
+    }
 }
 
 

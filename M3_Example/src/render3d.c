@@ -54,8 +54,8 @@ void to_polar(struct point3d p, float *r, float *phi, float *theta){
 void transform(struct sqr *s, struct matrix m){
     int ii;
     for(ii=0; ii < 12; ++ii){
-        s->edges[0].from = point_mult(s->edges[0].from, m);
-        s->edges[0].to = point_mult(s->edges[0].to, m);
+        s->edges[ii].from = point_mult(s->edges[ii].from, m);
+        s->edges[ii].to = point_mult(s->edges[ii].to, m);
     }
 }
 
@@ -106,8 +106,8 @@ void center(struct sqr_2d *s){
     x_r = x_max - x_min;
     y_r = y_max - y_min;
 
-    i_x = 100 * (x_r / max(x_r, y_r));
-    i_y = 100 * (y_r / max(x_r, y_r));
+    i_x = 60 * (x_r / max(x_r, y_r));
+    i_y = 60 * (y_r / max(x_r, y_r));
     d   = i_x / x_r;
 
     printf("x_r: %f \n", x_r);

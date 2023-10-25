@@ -78,7 +78,7 @@ void bmp16_line(int x1, int y1, int x2, int y2, u32 clr, void *dstBase, uint dst
 
 void bmp16_rect(int left, int top, int right, int bottom, u32 clr, void *dstBase, uint dstPitch);
 
-void bmp16_frame(int left, int top, int right, int bottom, u32 clr,                  void *dstBase, uint dstPitch);
+void bmp16_frame(int left, int top, int right, int bottom, u32 clr, void *dstBase, uint dstPitch);
 
 void m3_fill(COLOR clr);
 
