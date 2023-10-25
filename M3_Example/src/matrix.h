@@ -42,9 +42,15 @@ struct matrix create_eyepoint_matrix(float phi, float theta);
 /// create a matrix that encodes a rotation along the z axis.
 struct matrix create_rotz_matrix(float rad);
 
+/// multiply a vector with matrix m.
+struct point3d point_mult(struct point3d p, struct matrix m);
+
+/// return the minimal value of a and b.
 float min(float a, float b);
+/// return the maximal value of a and b.
 float max(float a, float b);
 
-struct point3d point_mult(struct point3d p, struct matrix m);
+
+
 
 #endif //UNTITLED1_MATRIX_H

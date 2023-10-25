@@ -46,6 +46,22 @@ struct matrix create_eyepoint_matrix(float phi, float theta){
     return m;
 }
 
+struct matrix create_rotz_matrix(float rad){
+    struct matrix m;
+    m.a00 = cos(rad);
+    m.a01 = sin(rad);
+    m.a02 = 0;
+
+    m.a10 = -sin(rad);
+    m.a11 = cos(rad);
+    m.a12 = 0;
+
+    m.a20 = 0;
+    m.a21 = 0;
+    m.a22 = 1;
+    return m;
+}
+
 struct point3d point_mult(struct point3d p, struct matrix m){
     float x = p.x * m.a00 + p.y * m.a10 + p.z * m.a20;
     float y = p.x * m.a01 + p.y * m.a11 + p.z * m.a21;

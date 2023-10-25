@@ -4,7 +4,6 @@
 
 #include "toolbox.h"
 
-
 void bmp16_line(int x1, int y1, int x2, int y2, u32 clr, void *dstBase, uint dstPitch)
 {
     int ii, dx, dy, xstep, ystep, dd;
@@ -101,6 +100,7 @@ void bmp16_frame(int left, int top, int right, int bottom, u32 clr,
 }
 
 void m3_fill(COLOR clr){
+    //int m3_size = 240*160*2 - 4;
     int ii;
     u32 *dst= (u32*)vid_mem;
     u32 wd= (clr<<16) | clr;

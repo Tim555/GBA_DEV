@@ -1,33 +1,99 @@
 #include "toolbox.h"
 #include "render3d.h"
 
+void vid_vsync()
+{
+    while(REG_VCOUNT >= 160);   // wait till VDraw
+    while(REG_VCOUNT < 160);    // wait till VBlank
+}
 
-int main() {
+void draw_square(){
+    struct point3d eye_point = create_point3d(100, 20, 20);
+    struct sqr s = create_sqr();
+    struct sqr s_temp;
+    float r, theta, phi;
+    struct matrix m_rot, m_eye;
+    int ii;
+
+    to_polar(eye_point, &r, &phi, &theta);
+
+    m_eye = create_eyepoint_matrix(phi, theta);
+    m_rot = create_rotz_matrix(0.01);
+
+    struct sqr_2d to_draw;
+
+    s_temp = s;
+    //eye point transformation
+    transform(&s_temp, m_eye);
+    translate(&s_temp, create_point3d(0, 0, -r));
+    //project to 2d image
+    to_draw = flatten(s_temp);
+    center(&to_draw);
+    for(ii=0; ii < 12; ++ii){
+        m3_line(to_draw.lines[ii].from.x, to_draw.lines[ii].from.y, to_draw.lines[ii].to.x, to_draw.lines[ii].to.y, CLR_RED);
+    }
+
+}
+
+int main(){
+    int ii, jj;
+    REG_DISPCNT = DCNT_MODE3 | DCNT_BG2;
+   // m3_fill(RGB15(12, 12 ,14));
+    m3_fill(CLR_BLUE);
+    draw_square();
+    while(1);
+}
+
+
+/*int main() {
 
     int ii, jj;
     REG_DISPCNT = DCNT_MODE3 | DCNT_BG2;
 
     struct point3d eye_point = create_point3d(100, 0, 0);
     struct sqr s = create_sqr();
+    struct sqr s_temp;
     float r, theta, phi;
-    struct matrix m;
+    struct matrix m_rot, m_eye;
 
     to_polar(eye_point, &r, &phi, &theta);
 
-    m = create_eyepoint_matrix(phi, theta);
-    transform(&s, m);
-    translate(&s, create_point3d(0, 0, -r));
+    m_eye = create_eyepoint_matrix(phi, theta);
+    m_rot = create_rotz_matrix(0.01);
 
-    struct sqr_2d to_draw = flatten(s);
-    center(&to_draw);
+    struct sqr_2d to_draw;
+
+
+   // transform(&s, m);
+   // translate(&s, create_point3d(0, 0, -r));
+
+   // struct sqr_2d to_draw = flatten(s);
+   // center(&to_draw);
 
     m3_fill(RGB15(12, 12 ,14));
 
-    for(ii=0; ii < 12; ++ii){
-        m3_line(to_draw.lines[ii].from.x, to_draw.lines[ii].from.y, to_draw.lines[ii].to.x, to_draw.lines[ii].to.y, CLR_RED);
-    }
 
-    while(1);
+
+
+    while(1){
+        m3_fill(RGB15(12, 12 ,14));
+        //transform original 3d object.
+        transform(&s, m_rot);
+
+        //copy square into working square.
+        s_temp = s;
+        //eye point transformation
+        transform(&s_temp, m_eye);
+        translate(&s_temp, create_point3d(0, 0, -r));
+        //project to 2d image
+        to_draw = flatten(s_temp);
+        center(&to_draw);
+        for(ii=0; ii < 12; ++ii){
+            m3_line(to_draw.lines[ii].from.x, to_draw.lines[ii].from.y, to_draw.lines[ii].to.x, to_draw.lines[ii].to.y, CLR_RED);
+        }
+
+    }
+    return 0;
 
 }
 
