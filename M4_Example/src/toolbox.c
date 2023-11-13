@@ -3,7 +3,7 @@
 //
 
 #include "toolbox.h"
-
+/*
 void bmp16_line(int x1, int y1, int x2, int y2, u32 clr, void *dstBase, uint dstPitch)
 {
     int ii, dx, dy, xstep, ystep, dd;
@@ -110,3 +110,4 @@ void m3_fill(COLOR clr){
         *dst++= wd;
 }
 
+*/

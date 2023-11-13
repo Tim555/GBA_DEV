@@ -8,6 +8,7 @@
 #include "math.h"
 #include "matrix.h"
 
+
 struct line{
     struct point2d from, to;
 };

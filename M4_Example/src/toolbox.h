@@ -10,7 +10,7 @@
 #define TOOLBOX_H
 
 // === (from tonc_types.h) ============================================
-
+/*
 typedef unsigned char   u8;
 typedef unsigned short  u16;
 typedef unsigned int    u32, uint;
@@ -106,5 +106,8 @@ INLINE void m3_frame(int left, int top, int right, int bottom, COLOR clr)
 {
     bmp16_frame(left, top, right, bottom, clr, vid_mem, M3_WIDTH*2);
 }
+
+*/
+
 
 #endif // TOOLBOX_H

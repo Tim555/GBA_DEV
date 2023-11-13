@@ -21,8 +21,13 @@ OBJCOPY := $(PREFIX)objcopy
 ARCH    := -mthumb-interwork -mthumb
 SPECS   := -specs=gba.specs
 
-CFLAGS  := $(ARCH) -O2 -Wall -fno-strict-aliasing
-LDFLAGS := $(ARCH) $(SPECS) -lm
+
+LIB := tonc
+LIBPATH := ../libtonc
+
+CFLAGS  := $(ARCH) -O2 -Wall -fno-strict-aliasing -I$(LIBPATH)/include
+LDFLAGS := $(ARCH) $(SPECS) -lm -L$(LIBPATH)/lib -l$(LIB)
+
 
 
 .PHONY : build clean

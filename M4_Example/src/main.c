@@ -1,11 +1,8 @@
 #include "toolbox.h"
 #include "render3d.h"
 
-void vid_vsync()
-{
-    while(REG_VCOUNT >= 160);   // wait till VDraw
-    while(REG_VCOUNT < 160);    // wait till VBlank
-}
+#include "tonc_core.h"
+#include "tonc_video.h"
 
 void draw_square(){
     struct point3d eye_point = create_point3d(-100, -20, -20);
@@ -58,6 +55,7 @@ int main(){
     m3_fill(CLR_BLACK);
 
     while(1){
+        vid_vsync();
         //m_rot = create_rotz_matrix(angle);
         //angle += angle_u;
         transform(&s, m_rot);
